@@ -231,4 +231,6 @@ def main(module_kind):
 if __name__ == '__main__':
     module_kind = module_kinds[int(sys.argv[1])]
     main(module_kind)
-    # python activation_patching.py 0
+    # python activation_patching.py 0/1/2
+    # 0/1/2 for computing IEs of token/attn/mlp hidden states respectively
+    # each run will return an indirect effect tensor of shape (1000, 48, 6) named "IE_module-kind_loc.pt"
