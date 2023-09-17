@@ -1,1 +1,1 @@
-# Locating and reducing language model hallucination via causal intervention
+# Causal tracing and alleviation of factual hallucinations
