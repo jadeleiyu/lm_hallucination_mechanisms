@@ -171,12 +171,12 @@ def main(module_kind):
     tokenizer.pad_token = tokenizer.eos_token
     pararel_df = pd.read_csv(data_dir + 'dataframes/pararel_questions.csv')
 
-    sampled_hall_idx = np.load(data_dir + 'results/pararel_sampled_hall_idx_act.npy')
-    # sampled_hall_idx = pararel_df.loc[
-    #     pararel_df['is hallucination'] == 1
-    # ].sample(n_hall_sample).index
+    # sampled_hall_idx = np.load(data_dir + 'results/pararel_sampled_hall_idx_act.npy')
+    sampled_hall_idx = pararel_df.loc[
+        pararel_df['is hallucination'] == 1
+    ].sample(n_hall_sample).index
     pararel_hall_df = pararel_df.iloc[sampled_hall_idx].reset_index(drop=True)
-    # np.save(data_dir + 'results/pararel_sampled_hall_idx_act.npy', np.array(sampled_hall_idx))
+    np.save(data_dir + 'results/pararel_sampled_hall_idx_act_{}.npy'.format(module_kind), np.array(sampled_hall_idx))
 
     results = {
         'TE': [], 'IE': [],
@@ -219,11 +219,6 @@ def main(module_kind):
             IEs.append(key_pos_IEs)  # (num_layer, 6)
 
         results['IE'].append(torch.stack(IEs).mean(0))
-
-        # for k, v in results.items():
-        #     print('{} shape: {}'.format(k, v[-1].shape))
-        # print()
-        # print()
 
     for k, v in results.items():
         torch.save(
